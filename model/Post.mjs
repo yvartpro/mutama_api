@@ -9,6 +9,7 @@ export default (sequelize) => {
       content: { type: DataTypes.TEXT },
       images: { type: DataTypes.JSON, allowNull: true },
       appartmentId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: true },
+      heroImageId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: true },
     },
     { tableName: "mutama_posts", timestamps: true, paranoid: true }
   )
