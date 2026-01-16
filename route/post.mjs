@@ -4,16 +4,43 @@ import db from "../model/index.mjs"
 
 const Post = db.Post
 
-router.get("/", (req, res) => {
-  Post.findAll({ order: [['createdAt', 'DESC']] })
-    .then(result => res.json(result))
-    .catch(err => res.status(500).json({ error: err.message }))
+import { resolveFiles } from "../service/fileResolver.mjs"
+
+router.get("/", async (req, res) => {
+  try {
+    const posts = await Post.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [
+        { model: db.File, as: 'contentFiles', through: { attributes: [] } },
+        { model: db.File, as: 'heroImage' }
+      ]
+    })
+    const results = await Promise.all(posts.map(async (post) => {
+      const data = post.toJSON()
+      data.images = await resolveFiles(data.images)
+      return data
+    }))
+    res.json(results)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
-router.get("/:id", (req, res) => {
-  Post.findByPk(req.params.id)
-    .then(post => res.json(post))
-    .catch(err => res.status(500).json({ error: err.message }))
+router.get("/:id", async (req, res) => {
+  try {
+    const post = await Post.findByPk(req.params.id, {
+      include: [
+        { model: db.File, as: 'contentFiles', through: { attributes: [] } },
+        { model: db.File, as: 'heroImage' }
+      ]
+    })
+    if (!post) return res.status(404).json({ error: "Post not found" })
+    const data = post.toJSON()
+    data.images = await resolveFiles(data.images)
+    res.json(data)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 router.post("/", async (req, res) => {

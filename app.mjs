@@ -8,10 +8,13 @@ import fileRouter from "./route/file.mjs"
 import { sequelize } from "./model/index.mjs"
 
 
+import path from "path"
+
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")))
 
 app.use("/api/appartment", appartmentRouter)
 app.use("/api/room", roomRouter)
