@@ -62,7 +62,7 @@ router.post("/", upload.single('file'), async (req, res) => {
   }
 })
 
-router.put("/:id", (req, res) => {
+router.patch("/:id", (req, res) => {
   File.findByPk(req.params.id)
     .then(file => {
       file.update(req.body)

@@ -13,16 +13,16 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.use("/appartment", appartmentRouter)
-app.use("/room", roomRouter)
-app.use("/post", postRouter)
-app.use("/file", fileRouter)
+app.use("/api/appartment", appartmentRouter)
+app.use("/api/room", roomRouter)
+app.use("/api/post", postRouter)
+app.use("/api/file", fileRouter)
 
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
   res.send("Mutama API")
 })
 
-app.get("/health", (req, res) => {
+app.get("/api/health", (req, res) => {
   res.send("OK")
 })
 

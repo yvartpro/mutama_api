@@ -1,4 +1,4 @@
-export default ({ Appartment, Room, Post, File }) => {
+export default ({ Appartment, Room, Post, File, PostFile }) => {
   Appartment.hasMany(Room, { foreignKey: "appartmentId", as: "rooms", onDelete: "CASCADE" })
   Room.belongsTo(Appartment, { foreignKey: "appartmentId", as: "appartment" })
 

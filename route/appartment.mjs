@@ -22,7 +22,7 @@ router.post("/", (req, res) => {
     .catch(err => res.status(500).json({ error: err.message }))
 })
 
-router.put("/:id", (req, res) => {
+router.patch("/:id", (req, res) => {
   Appartment.findByPk(req.params.id)
     .then(appartment => {
       appartment.update(req.body)
