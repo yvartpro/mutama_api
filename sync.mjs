@@ -11,4 +11,3 @@ import { sequelize } from "./model/index.mjs"
       process.exit(1)
     }
   })()
-
