@@ -45,6 +45,7 @@ router.post("/", upload.single('file'), async (req, res) => {
         url: `${baseUrl}/uploads/${filename}`,
         type: req.file.mimetype.startsWith('image/') ? 'image' : 'video',
         alt: req.body.alt || req.file.originalname,
+        description: req.body.description,
         optimized: true
       };
 
