@@ -45,108 +45,108 @@ app.get("/mutama/api/", (req, res) => {
       appartment: [
         {
           method: "GET",
-          path: `${APP_URL}/mutama/api/appartment`,
+          path: `${APP_URL}api/appartment`,
           description: "Get all appartments"
         },
         {
           method: "POST",
-          path: `${APP_URL}/mutama/api/appartment`,
+          path: `${APP_URL}api/appartment`,
           description: "Create a new appartment"
         },
         {
           method: "GET",
-          path: `${APP_URL}/mutama/api/appartment/:id`,
+          path: `${APP_URL}api/appartment/:id`,
           description: "Get a appartment by id"
         },
         {
           method: "PUT",
-          path: `${APP_URL}/mutama/api/appartment/:id`,
+          path: `${APP_URL}api/appartment/:id`,
           description: "Update a appartment by id"
         },
         {
           method: "DELETE",
-          path: `${APP_URL}/mutama/api/appartment/:id`,
+          path: `${APP_URL}api/appartment/:id`,
           description: "Delete a appartment by id"
         }
       ],
       room: [
         {
           method: "GET",
-          path: `${APP_URL}/mutama/api/room`,
+          path: `${APP_URL}api/room`,
           description: "Get all rooms"
         },
         {
           method: "POST",
-          path: `${APP_URL}/mutama/api/room`,
+          path: `${APP_URL}api/room`,
           description: "Create a new room"
         },
         {
           method: "GET",
-          path: `${APP_URL}/mutama/api/room/:id`,
+          path: `${APP_URL}api/room/:id`,
           description: "Get a room by id"
         },
         {
           method: "PUT",
-          path: `${APP_URL}/mutama/api/room/:id`,
+          path: `${APP_URL}api/room/:id`,
           description: "Update a room by id"
         },
         {
           method: "DELETE",
-          path: `${APP_URL}/mutama/api/room/:id`,
+          path: `${APP_URL}api/room/:id`,
           description: "Delete a room by id"
         }
       ],
       post: [
         {
           method: "GET",
-          path: `${APP_URL}/mutama/api/post`,
+          path: `${APP_URL}api/post`,
           description: "Get all posts"
         },
         {
           method: "POST",
-          path: `${APP_URL}/mutama/api/post`,
+          path: `${APP_URL}api/post`,
           description: "Create a new post"
         },
         {
           method: "GET",
-          path: `${APP_URL}/mutama/api/post/:id`,
+          path: `${APP_URL}api/post/:id`,
           description: "Get a post by id"
         },
         {
           method: "PUT",
-          path: `${APP_URL}/mutama/api/post/:id`,
+          path: `${APP_URL}api/post/:id`,
           description: "Update a post by id"
         },
         {
           method: "DELETE",
-          path: `${APP_URL}/mutama/api/post/:id`,
+          path: `${APP_URL}api/post/:id`,
           description: "Delete a post by id"
         }
       ],
       file: [
         {
           method: "GET",
-          path: `${APP_URL}/mutama/api/file`,
+          path: `${APP_URL}api/file`,
           description: "Get all files"
         },
         {
           method: "POST",
-          path: `${APP_URL}/mutama/api/file`,
+          path: `${APP_URL}api/file`,
           description: "Create a new file"
         },
         {
           method: "GET",
-          path: `${APP_URL}/mutama/api/file/:id`,
+          path: `${APP_URL}api/file/:id`,
           description: "Get a file by id"
         },
         {
           method: "PUT",
-          path: `${APP_URL}/mutama/api/file/:id`,
+          path: `${APP_URL}api/file/:id`,
           description: "Update a file by id"
         },
         {
           method: "DELETE",
-          path: `${APP_URL}/mutama/api/file/:id`,
+          path: `${APP_URL}api/file/:id`,
           description: "Delete a file by id"
         }
       ]
