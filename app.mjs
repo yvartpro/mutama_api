@@ -35,11 +35,11 @@ app.use("/api/room", roomRouter)
 app.use("/api/post", postRouter)
 app.use("/api/file", fileRouter)
 
-app.get("/mutama/", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "public", "index.html"))
 })
 
-app.get("/mutama/api/", (req, res) => {
+app.get("/api/", (req, res) => {
   const endpoints = {
     appartment: [
       { method: "GET", path: "api/appartment", description: "Get all appartments" },
