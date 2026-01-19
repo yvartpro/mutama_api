@@ -41,6 +41,7 @@ app.get("/mutama/", (req, res) => {
 app.get("/mutama/api/", (req, res) => {
   res.status(200).json({
     message: "Welcome to Mutama API",
+    dashboard: `${APP_URL}`,
     endoints: {
       appartment: [
         {
