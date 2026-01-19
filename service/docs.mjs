@@ -120,6 +120,57 @@ export const docsHtml = (endpoints, appUrl) => {
             text-align: right;
         }
 
+        .dashboard-card {
+            background: linear-gradient(135deg, var(--card-bg), #2d3748);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+
+        .dashboard-info h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            color: #818cf8;
+        }
+
+        .dashboard-info p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .dashboard-link {
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dashboard-link:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.4);
+        }
+
+        a.path {
+            text-decoration: none;
+        }
+        
+        a.path:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .endpoint {
                 flex-direction: column;
@@ -129,6 +180,11 @@ export const docsHtml = (endpoints, appUrl) => {
             .desc {
                 text-align: left;
                 max-width: none;
+            }
+            .dashboard-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
             }
         }
     </style>
@@ -141,8 +197,15 @@ export const docsHtml = (endpoints, appUrl) => {
         </header>
 
         <main>
-            <div>
-              <a href="${appUrl}"><span style="color: var(--primary);">Dashboard:</span> ${appUrl}</a>
+            <div class="dashboard-card">
+                <div class="dashboard-info">
+                    <h2>Management Dashboard</h2>
+                    <p>Access the administrative interface to manage your data</p>
+                </div>
+                <a href="${appUrl}" class="dashboard-link">
+                    Open Dashboard
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
             </div>
             ${Object.entries(endpoints).map(([name, group]) => `
                 <div class="section">
