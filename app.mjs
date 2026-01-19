@@ -27,19 +27,19 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")))
-app.use("/mutama/api/uploads", express.static(path.join(process.cwd(), "uploads")))
-app.use("/mutama", express.static(path.join(process.cwd(), "public")))
+app.use("/", express.static(path.join(process.cwd(), "public")))
 
 app.use("/api/appartment", appartmentRouter)
 app.use("/api/room", roomRouter)
 app.use("/api/post", postRouter)
 app.use("/api/file", fileRouter)
 
-app.get("/", (req, res) => {
+app.get("/mutama/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "public", "index.html"))
 })
 
-app.get("/api/", (req, res) => {
+app.get("/mutama/api/", (req, res) => {
+  console.log(APP_URL)
   const endpoints = {
     appartment: [
       { method: "GET", path: "api/appartment", description: "Get all appartments" },
