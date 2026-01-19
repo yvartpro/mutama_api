@@ -26,7 +26,6 @@ const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")))
 app.use("/mutama/api/uploads", express.static(path.join(process.cwd(), "uploads")))
 app.use("/mutama", express.static(path.join(process.cwd(), "public")))
 
@@ -40,6 +39,7 @@ app.get("/mutama/", (req, res) => {
 })
 
 app.get("/mutama/api/", (req, res) => {
+  console.log(APP_URL)
   const endpoints = {
     appartment: [
       { method: "GET", path: "api/appartment", description: "Get all appartments" },
