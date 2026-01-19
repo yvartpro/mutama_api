@@ -1,3 +1,10 @@
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, ".env") });
+
 import express from "express"
 import cors from "cors"
 import appartmentRouter from "./route/appartment.mjs"
@@ -8,7 +15,7 @@ import fileRouter from "./route/file.mjs"
 import { sequelize } from "./model/index.mjs"
 
 
-import path from "path"
+
 
 const app = express()
 
@@ -34,7 +41,8 @@ const APP_URL = process.env.APP_URL
 app.listen(PORT, () => {
   sequelize.authenticate()
     .then(() => {
-      console.log(`Mutama API running on ${APP_URL}`)
+      console.log(`[DB] Connected successfully`)
+      console.log(`[API] Mutama API running on ${APP_URL || `http://localhost:${PORT}`}`)
     })
     .catch(err => {
       console.error("Unable to connect to the database:", err)
