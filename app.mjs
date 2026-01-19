@@ -16,6 +16,10 @@ import { sequelize } from "./model/index.mjs"
 
 
 
+/** SERVER  CONFIG */
+const PORT = process.env.PORT
+const APP_URL = process.env.APP_URL
+
 
 const app = express()
 
@@ -34,9 +38,39 @@ app.get("/mutama/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "public", "index.html"))
 })
 
-/** START SERVER */
-const PORT = process.env.PORT
-const APP_URL = process.env.APP_URL
+app.get("/mutama/api/", (req, res) => {
+  res.status(200).json({
+    message: "Welcome to Mutama API",
+    endoints: [
+      {
+        method: "GET",
+        path: `${APP_URL}/mutama/api/`,
+        description: "Welcome to Mutama API"
+      },
+      {
+        method: "GET",
+        path: `${APP_URL}/mutama/api/appartment`,
+        description: "Get all appartments"
+      },
+      {
+        method: "GET",
+        path: `${APP_URL}/mutama/api/room`,
+        description: "Get all rooms"
+      },
+      {
+        method: "GET",
+        path: `${APP_URL}/mutama/api/post`,
+        description: "Get all posts"
+      },
+      {
+        method: "GET",
+        path: `${APP_URL}/mutama/api/file`,
+        description: "Get all files"
+      },
+    ]
+  })
+})
+
 
 app.listen(PORT, () => {
   sequelize.authenticate()
