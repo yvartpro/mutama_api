@@ -16,18 +16,15 @@ app.use(cors())
 app.use(express.json())
 app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")))
 app.use("/mutama/api/uploads", express.static(path.join(process.cwd(), "uploads")))
+app.use("/mutama", express.static(path.join(process.cwd(), "public")))
 
-app.use("/api/appartment", appartmentRouter)
-app.use("/api/room", roomRouter)
-app.use("/api/post", postRouter)
-app.use("/api/file", fileRouter)
+app.use("/mutama/api/appartment", appartmentRouter)
+app.use("/mutama/api/room", roomRouter)
+app.use("/mutama/api/post", postRouter)
+app.use("/mutama/api/file", fileRouter)
 
-app.get("/api/", (req, res) => {
-  res.send("Mutama API")
-})
-
-app.get("/api/health", (req, res) => {
-  res.send("OK")
+app.get("/mutama/", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "public", "index.html"))
 })
 
 /** START SERVER */
