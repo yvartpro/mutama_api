@@ -213,7 +213,7 @@ export const docsHtml = (endpoints, appUrl) => {
                     ${group.map(e => `
                         <div class="endpoint">
                             <span class="method ${e.method}">${e.method}</span>
-                            <a href="${appUrl}/mutama/${e.path}" class="path">/mutama/${e.path}</a>
+                            <a href="${appUrl}/${e.path}" class="path">/${e.path}</a>
                             <span class="desc">${e.description}</span>
                         </div>
                     `).join('')}
