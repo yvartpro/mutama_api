@@ -85,15 +85,15 @@ router.patch("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", (req, res) => {
-  Post.findByPk(req.params.id)
-    .then(post => {
-      if (!post) return res.status(404).json({ error: "Post not found" })
-      post.destroy()
-        .then(post => res.json(post))
-        .catch(err => res.status(500).json({ error: err.message }))
-    })
-    .catch(err => res.status(500).json({ error: err.message }))
+router.delete("/:id", async (req, res) => {
+  try {
+    const post = await Post.findByPk(req.params.id)
+    if (!post) return res.status(404).json({ error: "Post not found" })
+    await post.destroy()
+    res.json({ message: "Post deleted successfully" })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 export default router
