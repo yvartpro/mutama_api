@@ -34,7 +34,8 @@ router.post("/", upload.single('file'), async (req, res) => {
     if (req.file) {
       const filename = "mutama" + "_" + Math.round(Math.random() * 1E6) + ".webp";
       const outputPath = path.join(uploadDir, filename);
-      const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}/api`;
+      const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}/mutama/`;
+      const baseUrl = appUrl.endsWith('/') ? appUrl + 'api' : appUrl + '/api';
 
       await sharp(req.file.buffer)
         .resize(1080, 1080, { fit: 'inside', withoutEnlargement: true })
