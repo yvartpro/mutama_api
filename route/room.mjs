@@ -1,6 +1,6 @@
 import express from "express"
 const router = express.Router()
-import db from "../model/index.mjs"
+import db, { sequelize } from "../model/index.mjs"
 
 const Room = db.Room
 
@@ -32,30 +32,53 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-router.post("/", (req, res) => {
-  Room.create(req.body)
-    .then(room => res.json(room))
-    .catch(err => res.status(500).json({ error: err.message }))
+router.post("/", async (req, res) => {
+  const t = await sequelize.transaction()
+  try {
+    const room = await Room.create(req.body, { transaction: t })
+    await t.commit()
+
+    // Resolve for response
+    const data = room.toJSON()
+    data.images = await resolveFiles(data.images)
+    res.json(data)
+  } catch (err) {
+    await t.rollback()
+    res.status(500).json({ error: err.message })
+  }
 })
 
-router.patch("/:id", (req, res) => {
-  Room.findByPk(req.params.id)
-    .then(room => {
-      room.update(req.body)
-        .then(room => res.json(room))
-        .catch(err => res.status(500).json({ error: err.message }))
-    })
-    .catch(err => res.status(500).json({ error: err.message }))
+router.patch("/:id", async (req, res) => {
+  const t = await sequelize.transaction()
+  try {
+    const room = await Room.findByPk(req.params.id)
+    if (!room) {
+      await t.rollback()
+      return res.status(404).json({ error: "Room not found" })
+    }
+
+    await room.update(req.body, { transaction: t })
+    await t.commit()
+
+    // Resolve for response
+    const data = room.toJSON()
+    data.images = await resolveFiles(data.images)
+    res.json(data)
+  } catch (err) {
+    if (t) await t.rollback()
+    res.status(500).json({ error: err.message })
+  }
 })
 
-router.delete("/:id", (req, res) => {
-  Room.findByPk(req.params.id)
-    .then(room => {
-      room.destroy()
-        .then(room => res.json(room))
-        .catch(err => res.status(500).json({ error: err.message }))
-    })
-    .catch(err => res.status(500).json({ error: err.message }))
+router.delete("/:id", async (req, res) => {
+  try {
+    const room = await Room.findByPk(req.params.id)
+    if (!room) return res.status(404).json({ error: "Room not found" })
+    await room.destroy()
+    res.json({ message: "Room deleted successfully" })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 })
 
 export default router
