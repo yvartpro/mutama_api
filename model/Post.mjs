@@ -11,7 +11,7 @@ export default (sequelize) => {
       appartmentId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: true },
       heroImageId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: true },
     },
-    { tableName: "mutama_posts", timestamps: true, paranoid: true }
+    { tableName: "severinhouse_posts", timestamps: true, paranoid: true }
   )
   return Post
 }

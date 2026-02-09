@@ -5,7 +5,7 @@ export const docsHtml = (endpoints, appUrl) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mutama API Documentation</title>
+    <title>Severinhouse API Documentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -192,7 +192,7 @@ export const docsHtml = (endpoints, appUrl) => {
 <body>
     <div class="container">
         <header>
-            <h1>Mutama API</h1>
+            <h1>Severinhouse API</h1>
             <p class="subtitle">Official Documentation & Reference</p>
         </header>
 
@@ -222,7 +222,7 @@ export const docsHtml = (endpoints, appUrl) => {
         </main>
 
         <footer style="text-align: center; margin-top: 4rem; color: var(--text-dim); font-size: 0.8rem;">
-            &copy; ${new Date().getFullYear()} Mutama. All rights reserved.
+            &copy; ${new Date().getFullYear()} Severinhouse. All rights reserved.
         </footer>
     </div>
 </body>

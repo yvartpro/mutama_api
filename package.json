@@ -1,7 +1,7 @@
 {
-  "name": "mutama",
+  "name": "severinhouse",
   "version": "1.0.0",
-  "description": "Mutama API",
+  "description": "Severinhouse API",
   "main": "app.mjs",
   "type": "module",
   "scripts": {
@@ -10,7 +10,7 @@
     "sync": "node sync.mjs"
   },
   "keywords": [
-    "mutama",
+    "severinhouse",
     "api",
     "real estate",
     "maison de passage",

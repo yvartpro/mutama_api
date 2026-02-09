@@ -8,7 +8,7 @@ export default (sequelize) => {
       postId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
       fileId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
     },
-    { tableName: "mutama_post_files", timestamps: true, paranoid: true }
+    { tableName: "severinhouse_post_files", timestamps: true, paranoid: true }
   )
   return PostFile
 }

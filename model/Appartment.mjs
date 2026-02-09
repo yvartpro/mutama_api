@@ -10,7 +10,7 @@ export default (sequelize) => {
       price: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
       images: { type: DataTypes.JSON, allowNull: true }
     },
-    { tableName: "mutama_appartments", timestamps: true, paranoid: true }
+    { tableName: "severinhouse_appartments", timestamps: true, paranoid: true }
   )
   return Appartment
 }

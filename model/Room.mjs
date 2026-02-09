@@ -10,7 +10,7 @@ export default (sequelize) => {
       images: { type: DataTypes.JSON, allowNull: true },
       appartmentId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false },
     },
-    { tableName: "mutama_rooms", timestamps: true, paranoid: true }
+    { tableName: "severinhouse_rooms", timestamps: true, paranoid: true }
   )
   return Room
 }

@@ -32,9 +32,9 @@ router.get("/:id", (req, res) => {
 router.post("/", upload.single('file'), async (req, res) => {
   try {
     if (req.file) {
-      const filename = "mutama" + "_" + Math.round(Math.random() * 1E12) + ".webp";
+      const filename = "severinhouse" + "_" + Math.round(Math.random() * 1E12) + ".webp";
       const outputPath = path.join(uploadDir, filename);
-      const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}/mutama/`;
+      const appUrl = process.env.APP_URL || `${req.protocol}://${req.get('host')}/`;
       const baseUrl = appUrl.endsWith('/') ? appUrl + 'api' : appUrl + '/api';
 
       await sharp(req.file.buffer)
