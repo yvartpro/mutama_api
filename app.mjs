@@ -75,6 +75,16 @@ app.get("/api/", (req, res) => {
   res.send(htmlContent);
 })
 
+// Catch-all route - serves SPA for any non-API route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(process.cwd(), 'public', 'index.html'))
+});
+
+// Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!', details: err.message });
+});
 
 app.listen(PORT, () => {
   sequelize.authenticate()
