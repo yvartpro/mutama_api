@@ -27,19 +27,22 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")))
-app.use("/", express.static(path.join(process.cwd(), "public")))
+app.use("/dashboard", express.static(path.join(process.cwd(), "public")))
 
 app.use("/api/appartment", appartmentRouter)
 app.use("/api/room", roomRouter)
 app.use("/api/post", postRouter)
 app.use("/api/file", fileRouter)
 
-app.get("/", (req, res) => {
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "public", "index.html"))
+})
+
+app.get("/dashboard/*", (req, res) => {
   res.sendFile(path.join(process.cwd(), "public", "index.html"))
 })
 
 app.get("/api/", (req, res) => {
-  console.log(APP_URL)
   const endpoints = {
     appartment: [
       { method: "GET", path: "api/appartment", description: "Get all appartments" },
@@ -75,11 +78,6 @@ app.get("/api/", (req, res) => {
   res.send(htmlContent);
 })
 
-// Catch-all route - serves SPA for any non-API route
-app.get('*', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'public', 'index.html'))
-});
-
 // Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -90,7 +88,7 @@ app.listen(PORT, () => {
   sequelize.authenticate()
     .then(() => {
       console.log(`[DB] Connected successfully`)
-      console.log(`[API] Severinhouse API running on ${APP_URL || `http://localhost:${PORT}`}`)
+      console.log(`[API] Severinhouse API running on ${APP_URL || `http://localhost:${PORT}/api/`}`)
     })
     .catch(err => {
       console.error("Unable to connect to the database:", err)
