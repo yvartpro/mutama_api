@@ -27,20 +27,11 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")))
-app.use("/dashboard", express.static(path.join(process.cwd(), "public")))
 
 app.use("/api/appartment", appartmentRouter)
 app.use("/api/room", roomRouter)
 app.use("/api/post", postRouter)
 app.use("/api/file", fileRouter)
-
-app.get("/dashboard", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "public", "index.html"))
-})
-
-app.get("/dashboard/*", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "public", "index.html"))
-})
 
 app.get("/api/", (req, res) => {
   const endpoints = {
@@ -76,6 +67,23 @@ app.get("/api/", (req, res) => {
 
   const htmlContent = docsHtml(endpoints, APP_URL)
   res.send(htmlContent);
+})
+
+// Dashboard routes - serve static files and SPA fallback
+app.use("/dashboard", express.static(path.join(process.cwd(), "public"), {
+  index: false,  // Don't automatically serve index.html
+  fallthrough: true
+}))
+
+// SPA fallback - serve index.html for all /dashboard routes
+app.get("/dashboard*", (req, res) => {
+  const indexPath = path.join(process.cwd(), "public", "index.html")
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error("Error serving dashboard:", err)
+      res.status(404).send("Dashboard not found. Please ensure the dashboard is built and deployed.")
+    }
+  })
 })
 
 // Error Handler
