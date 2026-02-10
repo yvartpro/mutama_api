@@ -11,9 +11,11 @@ import appartmentRouter from "./route/appartment.mjs"
 import roomRouter from "./route/room.mjs"
 import postRouter from "./route/post.mjs"
 import fileRouter from "./route/file.mjs"
+import userRouter from "./route/user.mjs"
 
 import { sequelize } from "./model/index.mjs"
 import { docsHtml } from "./service/docs.mjs"
+import { authenticate } from "./middleware/auth.mjs"
 
 
 
@@ -28,10 +30,13 @@ app.use(cors())
 app.use(express.json())
 app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")))
 
-app.use("/api/appartment", appartmentRouter)
-app.use("/api/room", roomRouter)
-app.use("/api/post", postRouter)
-app.use("/api/file", fileRouter)
+app.get("/api/me", authenticate, (req, res) => res.json(req.user));
+app.use("/api", userRouter);
+
+app.use("/api/appartment", authenticate, appartmentRouter)
+app.use("/api/room", authenticate, roomRouter)
+app.use("/api/post", authenticate, postRouter)
+app.use("/api/file", authenticate, fileRouter)
 
 app.get("/api/", (req, res) => {
   const endpoints = {

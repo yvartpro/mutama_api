@@ -10,6 +10,7 @@ import RoomModel from "./Room.mjs"
 import PostModel from "./Post.mjs"
 import FileModel from "./File.mjs"
 import PostFileModel from "./PostFile.mjs"
+import UserModel from "./User.mjs"
 import applyAssociations from "./associations.mjs"
 
 const sequelize = new Sequelize(
@@ -28,9 +29,10 @@ const Room = RoomModel(sequelize);
 const Post = PostModel(sequelize);
 const File = FileModel(sequelize);
 const PostFile = PostFileModel(sequelize);
+const User = UserModel(sequelize);
 
-applyAssociations({ Appartment, Room, Post, File, PostFile });
+applyAssociations({ Appartment, Room, Post, File, PostFile, User });
 
-const db = { sequelize, Sequelize, Appartment, Room, Post, File, PostFile };
-export { sequelize, Sequelize, Appartment, Room, Post, File, PostFile };
+const db = { sequelize, Sequelize, Appartment, Room, Post, File, PostFile, User };
+export { sequelize, Sequelize, Appartment, Room, Post, File, PostFile, User };
 export default db;
