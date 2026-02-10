@@ -12,20 +12,22 @@ async function seed() {
     console.log("DB connected for seeding");
 
     const existingAdmin = await User.findOne({ where: { phone: DEFAULT_ADMIN_PHONE } });
+    const hashedPassword = await bcrypt.hash(DEFAULT_ADMIN_PASS, 10);
+
     if (existingAdmin) {
-      console.log("Admin already exists");
-      process.exit(0);
+      console.log("Admin already exists, updating password...");
+      await existingAdmin.update({ password: hashedPassword });
+      console.log("Admin password updated!");
+    } else {
+      await User.create({
+        full_name: "System Admin",
+        phone: DEFAULT_ADMIN_PHONE,
+        password: hashedPassword,
+        is_admin: true
+      });
+      console.log("Admin user created successfully!");
     }
 
-    const hashedPassword = await bcrypt.hash(DEFAULT_ADMIN_PASS, 10);
-    await User.create({
-      full_name: "System Admin",
-      phone: DEFAULT_ADMIN_PHONE,
-      password: hashedPassword,
-      is_admin: true
-    });
-
-    console.log("Admin user created successfully!");
     console.log("Phone: ", DEFAULT_ADMIN_PHONE);
     console.log("Pass: ", DEFAULT_ADMIN_PASS);
     process.exit(0);
