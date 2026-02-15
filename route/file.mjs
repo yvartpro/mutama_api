@@ -4,6 +4,7 @@ import fs from "fs"
 import multer from "multer"
 import sharp from "sharp"
 import db from "../model/index.mjs"
+import { authenticate } from "../middleware/auth.mjs"
 
 const router = express.Router()
 const File = db.File
@@ -29,7 +30,7 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(500).json({ error: err.message }))
 })
 
-router.post("/", upload.single('file'), async (req, res) => {
+router.post("/", authenticate, upload.single('file'), async (req, res) => {
   try {
     if (req.file) {
       const filename = "severinhouse" + "_" + Math.round(Math.random() * 1E12) + ".webp";
@@ -64,7 +65,7 @@ router.post("/", upload.single('file'), async (req, res) => {
   }
 })
 
-router.patch("/:id", (req, res) => {
+router.patch("/:id", authenticate, (req, res) => {
   File.findByPk(req.params.id)
     .then(file => {
       file.update(req.body)
@@ -74,7 +75,7 @@ router.patch("/:id", (req, res) => {
     .catch(err => res.status(500).json({ error: err.message }))
 })
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", authenticate, (req, res) => {
   File.findByPk(req.params.id)
     .then(file => {
       file.destroy()

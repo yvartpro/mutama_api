@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router()
 import db, { sequelize } from "../model/index.mjs"
+import { authenticate } from "../middleware/auth.mjs"
 
 const Appartment = db.Appartment
 
@@ -32,7 +33,7 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", authenticate, async (req, res) => {
   const t = await sequelize.transaction()
   try {
     // We store IDs in the database, so we keep req.body.images as is (assuming it's IDs)
@@ -49,7 +50,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authenticate, async (req, res) => {
   const t = await sequelize.transaction()
   try {
     const appartment = await Appartment.findByPk(req.params.id)
@@ -71,7 +72,7 @@ router.patch("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticate, async (req, res) => {
   try {
     const appartment = await Appartment.findByPk(req.params.id)
     if (!appartment) return res.status(404).json({ error: "Appartment not found" })

@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router()
 import db, { sequelize } from "../model/index.mjs"
+import { authenticate } from "../middleware/auth.mjs"
 
 const Room = db.Room
 
@@ -32,7 +33,7 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", authenticate, async (req, res) => {
   const t = await sequelize.transaction()
   try {
     const room = await Room.create(req.body, { transaction: t })
@@ -48,7 +49,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authenticate, async (req, res) => {
   const t = await sequelize.transaction()
   try {
     const room = await Room.findByPk(req.params.id)
@@ -70,7 +71,7 @@ router.patch("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticate, async (req, res) => {
   try {
     const room = await Room.findByPk(req.params.id)
     if (!room) return res.status(404).json({ error: "Room not found" })

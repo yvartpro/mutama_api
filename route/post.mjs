@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router()
 import db from "../model/index.mjs"
+import { authenticate } from "../middleware/auth.mjs"
 
 const Post = db.Post
 
@@ -43,7 +44,7 @@ router.get("/:id", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", authenticate, async (req, res) => {
   const t = await db.sequelize.transaction()
   try {
     const { contentFiles, ...postData } = req.body
@@ -61,7 +62,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authenticate, async (req, res) => {
   const t = await db.sequelize.transaction()
   try {
     const post = await Post.findByPk(req.params.id, { transaction: t })
@@ -85,7 +86,7 @@ router.patch("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authenticate, async (req, res) => {
   try {
     const post = await Post.findByPk(req.params.id)
     if (!post) return res.status(404).json({ error: "Post not found" })
