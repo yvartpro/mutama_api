@@ -33,10 +33,10 @@ app.use("/api/uploads", express.static(path.join(process.cwd(), "uploads")))
 app.get("/api/me", authenticate, (req, res) => res.json(req.user));
 app.use("/api", userRouter);
 
-app.use("/api/appartment", authenticate, appartmentRouter)
-app.use("/api/room", authenticate, roomRouter)
-app.use("/api/post", authenticate, postRouter)
-app.use("/api/file", authenticate, fileRouter)
+app.use("/api/appartment", appartmentRouter)
+app.use("/api/room", roomRouter)
+app.use("/api/post", postRouter)
+app.use("/api/file", fileRouter)
 
 app.get("/api/", (req, res) => {
   const endpoints = {
