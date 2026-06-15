@@ -75,6 +75,21 @@ app.get("/api/", (req, res) => {
 })
 
 // Serve frontend build (SPA)
+// Dashboard routes - serve the frontend index for dashboard paths
+const dashboardPaths = ["/dashboard", "/api/dashboard", "/dashboard/*", "/api/dashboard/*"];
+
+dashboardPaths.forEach(dashPath => {
+  app.get(dashPath, (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "index.html"), (err) => {
+      if (err) {
+        console.error(`Error serving dashboard at ${req.path}:`, err);
+        res.status(404).send("Dashboard not found. Please ensure the dashboard is built and deployed.");
+      }
+    });
+  });
+});
+
+// Serve frontend build (SPA)
 app.use(express.static(path.join(process.cwd(), "public"), {
   index: 'index.html',
   fallthrough: true
