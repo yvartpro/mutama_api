@@ -74,29 +74,24 @@ app.get("/api/", (req, res) => {
   res.send(htmlContent);
 })
 
-// Dashboard routes - serve static files and SPA fallback
-// Handle both /dashboard and /api/dashboard for production proxy compatibility
-const dashboardPaths = ["/dashboard", "/api/dashboard"];
+// Serve frontend build (SPA)
+app.use(express.static(path.join(process.cwd(), "public"), {
+  index: 'index.html',
+  fallthrough: true
+}));
 
-dashboardPaths.forEach(dashPath => {
-  app.use(dashPath, express.static(path.join(process.cwd(), "public"), {
-    index: false,
-    fallthrough: true
-  }));
-
-  app.get(`${dashPath}*`, (req, res) => {
-    const indexPath = path.join(process.cwd(), "public", "index.html");
-    res.sendFile(indexPath, (err) => {
+// SPA fallback: serve index.html for any non-API route without file extension
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api') && !req.path.match(/\.[^.]*$/)) {
+    res.sendFile(path.join(process.cwd(), "public", "index.html"), (err) => {
       if (err) {
-        // If it's a sub-path and file not found, it might be an asset check or an actual error
-        if (err.status === 404 && (req.path.includes("assets") || req.path.includes("vite.svg"))) {
-          return res.status(404).send("Asset not found");
-        }
-        console.error(`Error serving dashboard at ${dashPath}:`, err);
-        res.status(404).send("Dashboard not found. Please ensure the dashboard is built and deployed.");
+        console.error(`Error serving index.html:`, err);
+        res.status(404).send("Frontend not found");
       }
     });
-  });
+  } else {
+    next();
+  }
 });
 
 // Error Handler
