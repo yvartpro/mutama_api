@@ -80,7 +80,8 @@ const dashboardPaths = ["/dashboard", "/api/dashboard", "/dashboard/*", "/api/da
 
 dashboardPaths.forEach(dashPath => {
   app.get(dashPath, (req, res) => {
-    res.sendFile(path.join(process.cwd(), "public", "index.html"), (err) => {
+    // Serve a dedicated dashboard HTML that mounts the admin bundle
+    res.sendFile(path.join(process.cwd(), "public", "dashboard.html"), (err) => {
       if (err) {
         console.error(`Error serving dashboard at ${req.path}:`, err);
         res.status(404).send("Dashboard not found. Please ensure the dashboard is built and deployed.");
